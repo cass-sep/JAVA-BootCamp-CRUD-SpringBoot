@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1" author="lucas">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela CONTATO">
+            <not>
+                <tableExists tableName="CONTATO" />
+            </not>
+        </preConditions>
+
+        <createTable tableName="CONTATO">
+            <column name="ID" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CONTATO" />
+            </column>
+            <column name="NOME" type="${descricao}">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addAutoIncrement tableName="CONTATO" columnName="id" columnDataType="int" incrementBy="1" startWith="1" />
+
+    </changeSet>
+
+    <changeSet id="2" author="lucas">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela CONVERSA">
+            <not>
+                <tableExists tableName="CONVERSA" />
+            </not>
+        </preConditions>
+
+        <createTable tableName="CONVERSA">
+            <column name="id" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CONVERSA" />
+            </column>
+
+            <column name="CONTATO" type="int">
+                <constraints nullable="false" foreignKeyName="FK_CONTATO" references="CONTATO(ID)" />
+            </column>
+            <column name="ENVIOU" type="int">
+                <constraints nullable="false" foreignKeyName="FK_ENVIOU" references="CONTATO(ID)" />
+            </column>
+
+            <column name="MSG" type="${descricao}">
+                <constraints nullable="false" />
+            </column>
+            <column name="DATA" type="DATETIME(0)" defaultValueComputed="NOW(0)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addAutoIncrement tableName="CONVERSA" columnName="id" columnDataType="int" incrementBy="1" startWith="1" />
+
+    </changeSet>
+</databaseChangeLog> 
