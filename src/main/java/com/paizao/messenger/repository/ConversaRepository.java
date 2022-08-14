@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ConversaRepository extends RepositoryCrud<Conversa, Long> {
+
     List<Conversa> findByContatoOrderByData(Long contatoId);
 
     @Query(value = "SELECT *" +

@@ -1,6 +1,7 @@
 package com.paizao.messenger.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,13 @@ public class ConversaService extends ServiceCrud<Conversa, Long> {
 
     public List<Contato> conversasLista() {
         List<Conversa> conversando = conversaRepository.findByContato();
-        List<Contato> tomanocu = contatoRepository.findAll();
-        tomanocu.clear();
+        List<Contato> contatosLista = new ArrayList<>();
 
         for (Conversa conversa : conversando) {
-            tomanocu.add(contatoRepository.findById(conversa.getContato()).orElse(null));
+            contatosLista.add(contatoRepository.findById(conversa.getContato()).orElse(null));
         }
 
-        return tomanocu;
+        return contatosLista;
     }
 
 }
